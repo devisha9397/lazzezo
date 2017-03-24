@@ -6,6 +6,9 @@ $rest_id=$_REQUEST['rest_id'];
 <html>
 <head>
 <title>individual</title>
+<script src="Scripts/jquery-1.9.1.min.js"></script>
+<link href="Content/bootstrap.css" rel="stylesheet"/>
+<script src="Scripts/bootstrap.min.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/jquery.min.js"></script>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	

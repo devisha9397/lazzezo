@@ -9,7 +9,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <!-- Mirrored from p.w3layouts.com/demos/21-03-2016/cookery/web/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 27 Feb 2017 08:09:35 GMT -->
 <head>
-<title>Cookery A Food Category Flat Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<title></title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery.min.js"></script>
@@ -59,25 +59,8 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 </script>
 <script async type='text/javascript' src='../../../../../cdn.fancybar.net/ac/fancybar6a2f.js?zoneid=1502&amp;serve=C6ADVKE&amp;placement=w3layouts' id='_fancybar_js'></script>
 <style type='text/css'>  .adsense_fixed{position:fixed;bottom:-8px;width:100%;z-index:999999999999;}.adsense_content{width:720px;margin:0 auto;position:relative;background:#fff;}.adsense_btn_close,.adsense_btn_info{font-size:12px;color:#fff;height:20px;width:20px;vertical-align:middle;text-align:center;background:#000;top:4px;left:4px;position:absolute;z-index:99999999;font-family:Georgia;cursor:pointer;line-height:18px}.adsense_btn_info{left:26px;font-family:Georgia;font-style:italic}.adsense_info_content{display:none;width:260px;height:340px;position:absolute;top:-360px;background:rgba(255,255,255,.9);font-size:14px;padding:20px;font-family:Arial;border-radius:4px;-webkit-box-shadow:0 1px 26px -2px rgba(0,0,0,.3);-moz-box-shadow:0 1px 26px -2px rgba(0,0,0,.3);box-shadow:0 1px 26px -2px rgba(0,0,0,.3)}.adsense_info_content:after{content:'';position:absolute;left:25px;top:100%;width:0;height:0;border-left:10px solid transparent;border-right:10px solid transparent;border-top:10px solid #fff;clear:both}.adsense_info_content #adsense_h3{color:#000;margin:0;font-size:18px!important;font-family:'Arial'!important;margin-bottom:20px!important;}.adsense_info_content .adsense_p{color:#888;font-size:13px!important;line-height:20px;font-family:'Arial'!important;margin-bottom:20px!important;}.adsense_fh5co-team{color:#000;font-style:italic;}</style>
-<script>
 
-    $(function() {
-      $('.adsense_btn_close').click(function() {
-        $(this).closest('.adsense_fixed').css('display', 'none');
-      });
-
-      $('.adsense_btn_info').click(function() {
-        if ($('.adsense_info_content').is(':visible')) {
-          $('.adsense_info_content').css('display', 'none');
-        } else {
-          $('.adsense_info_content').css('display', 'block');
-        }
-      });
-
-    });
-
-  </script>
-<body>
+<form method="post" action="index1.php">
 
 <!--<div class='adsense_fixed'>
 <div class='adsense_content'> <span class='adsense_btn_close' title='Hide Ads'>x</span>
@@ -162,318 +145,120 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 				<br>
 				
 				
-	<div class="row">
-  <div class="col-lg-4 col-md-offset-4">
-    <div class="input-group">
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></button>
-        <ul class="dropdown-menu">
-          <li><a href="#">Area</a></li>
-          <li><a href="#">Asdvsx</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div><!-- /btn-group -->
-      <input type="text" class="form-control" aria-label="...">
-    </div><!-- /input-group -->
-  </div>
 
-  </div>
   <br>
   <br>
+  
+  
 				<div class="row">
 			<div class="col-lg-6 col-md-offset-3">
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for...">
+      <input type="text" name="txtsearch" class="form-control" placeholder="Search for restaurant">
       <span class="input-group-btn">
-        <button class="btn btn-danger" type="button">Go!</button>
+        <button type="submit" class="btn btn-danger" name="btngo" type="button">Go!</button>
       </span>
     </div>
 	<!-- /input-group -->
   </div><!-- /.col-lg-6 -->
-  
+  </div>
   </div>
   
+ </div> 
 
 			
 			
 			
-		</div>
-</div>
+
+ 
+
+  <?php
+  include('database.php');
+
+
+  if(isset($_POST['btngo']))
+  {
+	  $search=$_POST["txtsearch"];
+	$search1=strtolower($search);
+	    $obj=new database();
+            $res=$obj->search($search1);
+			$cnt=mysql_num_rows($res);
+				echo" <div class='blog'>
+	<div class='container'>
+		
+	<div class='menu-top'>
+				<div class='col-md-4 menu-left'>
+					<h3>Restuarants</h3>
+					<label><i class='glyphicon glyphicon-menu-up'></i></label>
+					
+				</div>
+				
+				<div class='clearfix'> </div>
+			</div>";
+		echo"<div class='col-md-9 blog-header'>
+		<div class='blog-head' style='height:400px'>";
+
+            if($cnt>=1)
+           {
+					
+				while($row=mysql_fetch_array($res,MYSQL_ASSOC))
+				{
+						echo"<div class='col-md-10 blog-top'>";
+				echo"<div class='blog-in'>";
+					echo"<a href='single.html'><img class='img-responsive' style='height:300px; width:100%;' src=".$row['rest_image']."></a>
+";
+echo"<center>";
+
+echo"<br><button type='button' class='btn btn-success' aria-label='Right Align'><span class='glyphicon glyphicon-heart' aria-hidden='true'></span>
+</button>";
+echo"</center>";
+					echo"<div class='blog-grid'>";
+						echo"<h3><a href='single.html'>".$row['rest_name']."</a></h3>";
+						echo"<h4><a href='single.html'>".$row['area']."</a></h4>";
+							echo"<div class='clearfix'> </div>";
+						
+						
+						echo"<h4><a href='single.html'>Hours: ".$row['opening_status']."</a></h4>";
+						
+						echo"<a href='order.php?rest_id=".$row['rest_id']."'><button type='button' class='btn btn-danger'>Order now</button></a>";
+						//echo"</div>";
+						//echo"<span class='date-in'><i class='glyphicon glyphicon-book'> </i>book a table</span>";
+						//echo"<a href='single.html' class='call'><i class='glyphicon glyphicon-comment'></i>24</a>";
+						echo"<div class='more'>";						
+						echo"<a class='link link-yaku'  href='individual.php?rest_id=".$row['rest_id']."'>";
+						echo"<span>R</span><span>e</span><span>a</span><span>d</span> <span>M</span><span>o</span><span>r</span><span>e</span>";
+						echo"	</a></a>
+					</div>	
+				</div>
+				</div>
+				</div>
+			</div>  ";
+		
+						
+				}	
+			echo"</div>
+</div>";
+			}
+			else
+				{
+					header("location:index2.php");
+				}
+
+			
+  }
+  
+  
+  ?>
+
+  				
 <!--content-->
 <!---728x90--->
-<div class="content" id="content-down">
-	<div class="content-top-top">
-		<div class="container">
-			<div class="content-top">
-				<div class="col-md-4 content-left animated wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
-					<h3>Quick Searches</h3>
-					<label><i class="glyphicon glyphicon-menu-up"></i></label>
-					<span>There are many Categories of food.</span>
-				</div>
-				<div class="col-md-8 content-right animated wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="500ms">
-					<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour , or randomised words which don't look even slightly believable.There are many variations by injected humour. There are many variations of passages of Lorem Ipsum available.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form by injected humour , or randomised words</p>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
-			<div class="content-mid">
-			
-				
-				
-	<div class="row">
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="images/breakfast.jpg" alt="..." style="height:270px; width:350px">
-      <div class="caption">
-        <h3>chinese</h3>
-		
-        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-        <p><a href="category.php" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      
-	  </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="images/dining.jpg" alt="..." style="height:270px; width:350px">
-      <div class="caption">
-        <h3>mexican</h3>
-       
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-6 col-md-4">
-    <div class="thumbnail">
-      <img src="images/bakes.jpg" alt="..." style="height:270px; width:350px">
-      <div class="caption">
-        <h3>Italian</h3>
-        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-      </div>
-    </div>
-  </div>
-</div>
-			
-			
-					
-				</div>
-				
-				</div>
-				
-				<div class="clearfix"></div>
-			</div>
-		
-	
-<!--services-->
-<!---728x90--->
-<div class="services">
-	<div class="container">
-		<div class="services-top">		
-			<div class="col-md-8 services-right animated wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
-					<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour , or randomised words which don't look even slightly believable.There are many variations by injected humour. There are many variations of passages of Lorem Ipsum available.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form by injected humour , or randomised words</p>
-			</div>
-			<div class="col-md-4 services-left animated wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="500ms">
-				<h3>Services</h3>
-				<label><i class="glyphicon glyphicon-menu-up"></i></label>
-				<span>There are many variations</span>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-		<div class="service-top">
-			<div class="col-md-5 service-top animated wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
-				<div class=" service-grid">
-					<div class="col-md-6 service-grid1">
-						<div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
-							<a href="#" class="hi-icon hi-icon-mobile glyphicon glyphicon-cutlery"></a>
-							<p><b>Home delivery</b></p>
-						</div>
-					</div>
-					<div class="col-md-6 service-grid1">
-						<div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
-							<a href="#" class="hi-icon hi-icon-mobile glyphicon glyphicon-globe"></a>
-							<p><b>Search Famous food</b></p>
-						</div>					
-						</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class=" service-grid">
-					<div class="col-md-6 service-grid1">
-						<div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
-							<a href="#" class="hi-icon hi-icon-mobile glyphicon glyphicon-list-alt"></a>
-							<p><b>Book a table</b></p>
-						</div>					
-						</div>
-					<div class="col-md-6 service-grid1">
-						<div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a">
-							<a href="#" class="hi-icon hi-icon-mobile glyphicon glyphicon-home" ></a>
-							<p><b>Home</b></p>
-						</div>					
-						</div>
-					<div class="clearfix"> </div>
-				</div>
-				
-			</div>
-			<div class="col-md-7 service-bottom animated wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="500ms">
-				<div class=" service-bottom1">
-					<div class=" ser-bottom">
-						<img src="images/category_1.png" class="img-responsive" alt="">
-					</div>
-					<div class="ser-top "> 
-						<h5>Home delivery</h5>
-						<p>We provide home delivery.</p>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class=" service-bottom1">
-					<div class=" ser-bottom">
-						<img src="images/category_13.png" class="img-responsive" alt="">
-					</div>
-					<div class="ser-top "> 
-						<h5>Famous food around your Area.</h5>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis.</p>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class=" service-bottom1">
-					<div class=" ser-bottom">
-						<img src="images/category_7.png" class="img-responsive" alt="">
-					</div>
-					<div class="ser-top "> 
-						<h5>Book a table</h5>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis.</p>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-	</div>
-</div>
-<!--//services-->
-<!---728x90--->
-<!--news-->
-	<div class="content-top-top">
-		<div class="container">
-			<div class="content-top">
-				<div class="col-md-4 content-left animated wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
-					<h3>Discounts</h3>
-					<label><i class="glyphicon glyphicon-menu-up"></i></label>
-					<span>There are many variations</span>
-				</div>
-				<div class="col-md-8 content-right animated wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="500ms">
-					<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour , or randomised words which don't look even slightly believable.There are many variations by injected humour. There are many variations of passages of Lorem Ipsum available.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form by injected humour , or randomised words</p>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
-			<div class="news-bottom">
-				<div class="news-bot">
-					<div class="col-md-6 news-bottom1 animated wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
-						<a href="single.html">
-							<div class="content-item">
-								<div class="overlay"></div>
-								<div class=" news-bottom2">
-									<ul class="grid-news">
-										<li><span><i class="glyphicon glyphicon-calendar"> </i>08.09.2014</span><b>/</b></li>
-										<li><span><i class="glyphicon glyphicon-comment"> </i>5 Comment</span><b>/</b></li>
-										<li><span><i class="glyphicon glyphicon-share"> </i>Share</span></li>
-									</ul>
-									<p>There are many variations of passages of Lorem Ipsum available</p>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="col-md-6 news-bottom1 animated wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="500ms">
-						<a href="single.html">
-							<div class="content-item content-item1">
-								<div class="overlay"></div>
-								<div class=" news-bottom2">
-									<ul class="grid-news">
-											<li><span><i class="glyphicon glyphicon-calendar"> </i>08.09.2014</span><b>/</b></li>
-											<li><span><i class="glyphicon glyphicon-comment"> </i>5 Comment</span><b>/</b></li>
-											<li><span><i class="glyphicon glyphicon-share"> </i>Share</span></li>
-										</ul>
-									<p>There are many variations of passages of Lorem Ipsum available</p>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="news-bot">
-					<div class="col-md-6 news-bottom1">
-						<a href="single.html">
-							<div class="content-item content-item2 animated wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
-								<div class="overlay"></div>
-								<div class=" news-bottom2">
-									<ul class="grid-news">
-											<li><span><i class="glyphicon glyphicon-calendar"> </i>08.09.2014</span><b>/</b></li>
-											<li><span><i class="glyphicon glyphicon-comment"> </i>5 Comment</span><b>/</b></li>
-											<li><span><i class="glyphicon glyphicon-share"> </i>Share</span></li>
-										</ul>
-									<p>There are many variations of passages of Lorem Ipsum available</p>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="col-md-6 news-bottom1 animated wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
-						<a href="single.html">
-							<div class="content-item content-item3">
-								<div class="overlay"></div>
-								<div class=" news-bottom2">
-									<ul class="grid-news">
-											<li><span><i class="glyphicon glyphicon-calendar"> </i>08.09.2014</span><b>/</b></li>
-											<li><span><i class="glyphicon glyphicon-comment"> </i>5 Comment</span><b>/</b></li>
-											<li><span><i class="glyphicon glyphicon-share"> </i>Share</span></li>
-										</ul>
-									<p>There are many variations of passages of Lorem Ipsum available</p>
-								</div>
-							</div>
-						</a>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-			
-			</div>
-		</div>
-	</div>
 <!--//news-->
-</div>
-<!--footer-->
-	<div class="footer">
-		<div class="container">
-			<div class="footer-head">
-				<div class="col-md-8 footer-top animated wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="500ms">
-					<ul class=" in">
-						<li><a href="index-2.html">Home</a></li>
-						<li><a  href="menu.html">Add a restuarant</a></li>
-						<li><a  href="blog.html">Blog</a></li>
-						<li><a  href="events.html">Events</a></li>
-						<li><a  href="contact.html">Contact</a></li>
-					</ul>					
-						<span>There are many variations of passages</span>
-				</div>
-				<div class="col-md-4 footer-bottom  animated wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
-					<h2>Follow Us</h2>
-					<label><i class="glyphicon glyphicon-menu-up"></i></label>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis.</p>
-					<ul class="social-ic">
-						<li><a href="#"><i></i></a></li>
-						<li><a href="#"><i class="ic"></i></a></li>
-						<li><a href="#"><i class="ic1"></i></a></li>
-						<li><a href="#"><i class="ic2"></i></a></li>
-						<li><a href="#"><i class="ic3"></i></a></li>
-					</ul>
 
-				</div>
-			<div class="clearfix"> </div>
-					
-			</div>
-			<p class="footer-class animated wow bounce" data-wow-duration="1000ms" data-wow-delay="500ms">&copy; 2016 Cookery . All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
-		</div>
-	</div>		
-	<!--//footer-->
+<!--footer-->
+<?php
+include('footer.php');
+?>		
+	</form><!--//footer-->
 </body>
 
 <!-- Mirrored from p.w3layouts.com/demos/21-03-2016/cookery/web/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 27 Feb 2017 08:09:56 GMT -->

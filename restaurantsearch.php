@@ -1,7 +1,7 @@
 <?php
 
 SESSION_START();
-
+$rest_id=$_REQUEST['rest_id'];
 ?>
 
 
@@ -63,7 +63,7 @@ include('header.php');
 
 	include('database.php');
 	$obj=new database();
-		$res=$obj->disrestc();
+	$res=$obj->disrestsearch($rest_id);
 		
 		
 		echo"<div class='menu-top'>
@@ -79,9 +79,9 @@ include('header.php');
 		<div class='blog-head' style='height:400px'>";
 	while($row=mysql_fetch_array($res,MYSQL_ASSOC))
 	{
-			echo"<div class='col-md-4 blog-top'>";
+			echo"<div class='col-md-10 blog-top'>";
 				echo"<div class='blog-in'>";
-					echo"<a href='single.html'><img class='img-responsive' style='height:300px;' src=".$row['rest_image']."></a>
+					echo"<a href='single.html'><img class='img-responsive' style='height:300px; width:100%;' src=".$row['rest_image']."></a>
 ";
 echo"<center>";
 
@@ -116,22 +116,23 @@ echo"</center>";
 
 </div>";
 ?>
+
 <?php
+ 
 
 
-
-  if(isset($_POST['btngo']))
+  if(isset($_POST['btnsubmit']))
   {
-	  $search=$_POST["txtsearch"];
+	  $search=$_POST["txtsearch2"];
 	$search1=strtolower($search);
-	    $obj4=new database();
-            $res4=$obj4->search($search1);
-			$cnt=mysql_num_rows($res4);
+	    $obj=new database();
+            $res=$obj->search($search1);
+			$cnt=mysql_num_rows($res);
 				
             if($cnt>=1)
            {
 				
-				while($row=mysql_fetch_array($res4,MYSQL_ASSOC))
+				while($row=mysql_fetch_array($res,MYSQL_ASSOC))
 				{
 						Header('Location:restaurantsearch.php?rest_id='.$row['rest_id'].'');
 				}	
@@ -146,25 +147,21 @@ echo"</center>";
   }
   
   
-  ?>  
+  ?>
+  
 
-
+  
 <?php
 
 	
 	$obj1=new database();
-		$res1=$obj1->disrestc();
+		$res1=$obj->disrestc();
 	
 		echo"<div class='col-md-3 categories-grid'>
-			<div class='search-in animated wow fadeInUp' data-wow-duration='1000ms' data-wow-delay='500ms'>
-				<h4>Search</h4>
-					<div class='search'>
-					<form>
-						<input type='text'name='txtsearch' placeholder='Search'  >
-						<input type='submit'name='btngo' value='' >
-					</form>
-					</div>
-		
+			  <div class='search-in animated wow fadeInUp' data-wow-duration='1000ms' data-wow-delay='500ms'>
+				
+					
+			</div>
 			<div class='grid-categories animated wow fadeInLeft' data-wow-duration='1000ms' data-wow-delay='500ms'>
 			<h4>Categories</h4>";
 while($row=mysql_fetch_array($res1,MYSQL_ASSOC))

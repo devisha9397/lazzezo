@@ -1,7 +1,7 @@
 <?php
 
 $obj1=new database();
-$res1=$obj1->getdata("select o.*,s.* from order_tbl as o,subcui_tbl as s where o.fk_subcui_id=d.subcui_id AND fk_user_email='$email' and fk_rest_id='$rest_id'");
+$res1=$obj1->getdata("select o.*,s.*,r.* from order_tbl as o,subcui_tbl as s,restaurant_tbl as r where o.fk_subcui_id=d.subcui_id AND o.fk_user_email='$email' and o.fk_rest_id='$rest_id'");
 while($row=mysql_fetch_assoc($res1))
 {
 echo '<table class="table-responsive">';
@@ -16,7 +16,7 @@ echo '</tr>';
 echo '</tr>';
 echo '<div class="col-sm-6 col-md-4">';
 echo '<div class="caption">';
-echo '<td><img style"height:30px;width:50px" src="images/'.$row["pro_img"].'"></td>';
+echo '<td><img style"height:30px;width:50px" src="images/'.$row[""].'"></td>';
 echo '<td><h3>'.$row["o_id"].'</h3></td>';
 echo '<td><h3>'.$row["o_date"].'</h3></td>';
 echo '<td>

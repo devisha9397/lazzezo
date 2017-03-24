@@ -32,6 +32,13 @@ private static $host='localhost';
 			database::disconnect();
 	}
 	
+	public function disrestsearch($rest_id)
+	{		$con=database::connect();
+			$res=mysql_query("select r.*,c.* from restaurant_tbl as r,category_tbl as c where r.fk_cat_id=c.cat_id and rest_id='$rest_id'" ,$con);
+			return $res;
+			database::disconnect();
+	}
+	
 	public function discat($cusines)
 	{		$con=database::connect();
 			$res=mysql_query("select r.*,c.*  from restaurant_tbl as r,category_tbl as c where r.fk_cat_id=c.cat_id and cusines='$cusines'" ,$con);
@@ -97,19 +104,38 @@ private static $host='localhost';
 			database::disconnect();
 	}
 
-public function addcart($fk_rest_id,$fk_user_email,$fk_subcui_id,$quantity,$total_amount,$date_of_order,$delivery_area)
+public function addcart($rest_id,$fk_user_email,$fk_subcui_id,$quantity,$total_amount,$date_of_order,$area)
 	{		$con=database::connect();
-			$res=mysql_query("insert into order_tbl values(NULL,'$fk_rest_id','$fk_user_email','$fk_subcui_id','$quantity','0',$total_amount,$date_of_order,'$delivery_area)",$con);
+			$res=mysql_query("insert into order_tbl values(NULL,'$rest_id','$fk_user_email','$fk_subcui_id','$quantity','$total_amount','0','$date_of_order','$area')",$con);
+			return $res;
+			database::disconnect();
+	}
+	public function changepwd($pwd,$email)
+	{		$con=database::connect();
+			$res=mysql_query("update user_tbl set password='$pwd' where user_email='$email'",$con);
+			return $res;
+			database::disconnect();
+	}
+	public function viewprofile($email)
+	{		$con=database::connect();
+			$res=mysql_query("select * from user_tbl where user_email='$email'",$con);
+			return $res;
+			database::disconnect();
+	}
+		public function updatepwd($email,$pwd)
+	{		$con=database::connect();
+			$res=mysql_query("update user_tbl set password='$pwd' where user_email='$email' ",$con);
 			return $res;
 			database::disconnect();
 	}
 	
-	public function getcart($subcui_id)
+	public function getcart($subcui_id,$rest_id)
 	{		$con=database::connect();
-			$res=mysql_query("select * from subcui_tbl where subcui_id='$subcui_id'",$con);
+			$res=mysql_query("select * from subcui_tbl where subcui_id='$subcui_id'  and fk_rest_id='$rest_id' ",$con);
 			return $res;
 			database::disconnect();
 	}
+	
 	
 		public function getdiscount()
 	{		$con=database::connect();
@@ -120,6 +146,12 @@ public function addcart($fk_rest_id,$fk_user_email,$fk_subcui_id,$quantity,$tota
 	public function getdiscountrest($rest_id)
 	{		$con=database::connect();
 			$res=mysql_query("select m.*,r.* from restaurant_tbl as r,discount_tbl as m where m.fk_rest_id=r.rest_id and m.fk_rest_id='$rest_id'",$con);
+			return $res;
+			database::disconnect();
+	}
+	public function search($term)
+	{		$con=database::connect();
+			$res=mysql_query("select * from restaurant_tbl  where rest_name LIKE '%".$term."%'",$con);
 			return $res;
 			database::disconnect();
 	}

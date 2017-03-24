@@ -23,6 +23,50 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>
  new WOW().init();
 </script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6S9Zli4v_L0pYZbOpDuk1k6fFX0JMqTA&callback=initMap""></script>
+
+<script type="text/javascript">
+    function initialize() {
+       <?php
+
+       	//$pro_id=$_REQUEST["pro_id"];
+          $con=mysql_connect('localhost','root','');
+          mysql_select_db('lazeezo',$con);
+          
+          $res=mysql_query("select * from restaurant_tbl where rest_id='$rest_id' ",$con);
+          
+            while ($row=mysql_fetch_assoc($res)) {
+              $lat1=$row["latitude"];
+              $long1=$row["longitude"];
+              $address=$row["rest_add"];
+
+              echo 'var latlng = new google.maps.LatLng('.$row["latitude"].','.$row["longitude"].');';
+            }
+
+  ?>
+       //var latlng = new google.maps.LatLng(28.535516,77.391026);
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: latlng,
+          zoom: 17
+        });
+        var marker = new google.maps.Marker({
+          map: map,
+          position: latlng,
+          draggable: false,
+          anchorPoint: new google.maps.Point(0, -29)
+       });
+        var infowindow = new google.maps.InfoWindow();   
+        google.maps.event.addListener(marker, 'click', function() {
+          var iwContent = '<div id="iw_container">' +
+          '<div class="iw_title"><b>Location</b> : <?php echo $address; ?></div></div>';
+          // including content to the infowindow
+          infowindow.setContent(iwContent);
+          // opening the infowindow in the current map and at the current marker location
+          infowindow.open(map, marker);
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 </head>
 <script src='../../../../../ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -92,6 +136,8 @@ include('headerbefore.php');
 							
 						</ul>";
 						echo"<h3><span class='glyphicon glyphicon-map-marker' aria-hidden='true'>Address:</span> ".$row['rest_add']."</h3>";
+						echo"<div id='map' style='width: 700px; height: 250px;'></div>";
+
 						echo"<h3>Cusines:".$row['cusines']."</h3>";
 						echo"<h3>Cost for 2:".$row['cost']."</h3>";
 						echo"<h3>Hours:".$row['opening_status']."</h3>";
@@ -228,23 +274,54 @@ include('headerbefore.php');
 
 		</div>
 	
+		  <?php
+
+  if(isset($_POST['btngo']))
+  {
+	  $search=$_POST["txtsearch"];
+	$search1=strtolower($search);
+	    $obj=new database();
+            $res=$obj->search($search1);
+			$cnt=mysql_num_rows($res);
+				
+            if($cnt>=1)
+           {
+				
+				while($row=mysql_fetch_array($res,MYSQL_ASSOC))
+				{
+						Header('Location:restaurantsearch.php?rest_id='.$row['rest_id'].'');
+				}	
+				
+			}
+			else
+				{
+					header("location:noresult.php");
+				}
+
+			
+  }
+  
+  
+  ?>
 		
+		
+			
 				<?php
 
 	
 	$obj1=new database();
 		$res1=$obj1->disrestc();
 		
-		echo"<div class='col-md-3 categories-grid'>
+		echo"
+		<div class='col-md-3 categories-grid'>
 			<div class='search-in animated wow fadeInUp' data-wow-duration='1000ms' data-wow-delay='500ms'>
 				<h4>Search</h4>
 					<div class='search'>
 					<form>
-						<input type='text' placeholder='Search'  >
-						<input type='submit' value='' >
+						<input type='text'name='txtsearch' placeholder='Search'  >
+						<input type='submit'name='btngo' value='' >
 					</form>
 					</div>
-			</div>
 			<div class='grid-categories animated wow fadeInLeft' data-wow-duration='1000ms' data-wow-delay='500ms'>
 			<h4>Categories</h4>";
 while($row=mysql_fetch_array($res1,MYSQL_ASSOC))

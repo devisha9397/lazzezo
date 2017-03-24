@@ -27,7 +27,7 @@ include 'database.php';
 		$dd=$_POST["dd"];
 		$mm=$_POST["mm"];
 		$yyyy=$_POST["yyyy"];
-		$date=$yyyy."-".$mm."-".$dd;
+		$date=$dd."-".$mm."-".$yyyy;
 		//$dd."-".$mm."-".$yyyy;
 		$pro_pic=$_POST["txtfile"];
 		$type=2;
@@ -67,7 +67,9 @@ include 'database.php';
 
 <body>
 <form method="post" action="signup.php">
-<!--
+<?php
+include('head.php');
+?><!--
     you can substitue the span of reauth email for a input with the email and
     include the remember me checkbox
     -->
@@ -150,7 +152,12 @@ include 'database.php';
             </form><!-- /form -->
             
         </div><!-- /card-container -->
-    </div><!-- /container -->
+    </div>
+	
+	<?php
+		include('footer.php');
+	?>
+	<!-- /container -->
 	</form>
 	</body>
 	</html>

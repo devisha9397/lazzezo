@@ -1,7 +1,45 @@
 <?php
 SESSION_START();
 $rest_id=$_REQUEST['rest_id'];
+$_SESSION['rest_id']=$rest_id;
+
 ?>
+<?php
+	include('database.php');
+	if(isset($_POST["btnadd"]))
+	{
+		$subcui_id=$_POST["btnadd"];
+		$subcui_price=$_POST["btnadd"];
+		echo $subcui_id;
+		$quantity=$_POST["quantity"];
+		echo "qu".$quantity;
+		$email=$_SESSION["email"];
+		
+	
+		
+		//$price=$_POST["subcui_price"];
+	
+	$amt=$subcui_price*$quantity;
+	
+	$date_of_order=date("dd-mm-yyyy");
+	$area=NULL;
+	$obj5=new database();
+	$res5=$obj5->addcart($rest_id,$email,$subcui_id,$quantity,$amt,$date_of_order,$area);
+	if($res5==1)
+	{
+		header('location:order.php?rest_id='.$rest_id);
+		
+	}
+	else
+	{
+		echo"something went wrong";
+		
+	}
+	}
+
+
+
+ ?>
 <!DOCTYPE HTML>
 <html>
 
@@ -32,7 +70,7 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 </script>
 <script async type='text/javascript' src='../../../../cdn.fancybar.net/ac/fancybar6a2f.js?zoneid=1502&amp;serve=C6ADVKE&amp;placement=w3layouts' id='_fancybar_js'></script>
 
-<form method="post" action="order.php">
+<form method="post" action="order.php?rest_id=<?php echo $rest_id; ?>">
 <!-- header -->
 <div class="head-top">
 			
@@ -52,7 +90,7 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 <div class='col-md-9'>
 <div class='single'>
 <?php
-	include('database.php');
+
 	$obj=new database();
 	
 		$res=$obj->disind($rest_id);
@@ -74,22 +112,29 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 </nav></div></div>";
 		}
 	?>	
-	<table class="table table-hover">
-		<th> Item Name</th>
-	<th> Price</th>
+	<table class="table table-hover" >
+		
+	
+	
+	
 	
 <?php
+
 $obj1=new database();
 	
 		$res1=$obj1->getorders($rest_id);
 		while($row=mysql_fetch_array($res1,MYSQL_ASSOC))
 		{
+			$subcui_id=$row["subcui_id"];
+			
+		
+			
 			echo'<tr>
-			<div class="panel panel-default">
+	<td>		<div class="panel panel-default">
   <div class="panel-body">
    '.$row['cui_name'].'
   </div>
-</div></tr>
+</div></td></tr>
 			
 				<tr>
 				<td><h4>'.$row["subcui_name"].'</h4></td>
@@ -99,15 +144,26 @@ $obj1=new database();
 						<div class="pr-left">
 							<div class="item_add"><span class="item_price"><h4>'.$row["subcui_price"].'</h4></span></div>
 						</div>
-						<div class="pr-right">
-							<div class="item_add"><span class="item_price"><a href="#">Pick</a></span></div>
-						</div>
-							<div class="clearfix"></div>
-					</div></div></td>
-	
-  </div>
-</div>
-				</td>
+						
+							
+					</div>
+					</td>
+					<td><select name="quantity">
+<option value="1">1</option>
+<option value="2">2</option>
+<option  value="3">3</option>
+<option  value="4">4</option>
+<option  value="5">5</option>
+<option  value="1">6</option>
+<option  value="1">7</option>
+<option  value="1">8</option>
+<option  value="1">9</option>
+<option  value="1">10</option>
+</select>
+</td>
+					<td>
+					<button type="submit" name="btnadd" value="'.$row["subcui_id"].'.'.$row["subcui_price"].'" >add</button>
+					</td>
 				</tr>';
 			
 			
@@ -115,7 +171,9 @@ $obj1=new database();
 		}
 
 
+		
 ?>
+
 </table>
 	</div>	
 </div>
@@ -163,10 +221,12 @@ echo"</div>";
 <div class="header-right1">
 						<div class="cart box_1">
 							<?php
-							echo'<a href="addcart.php?id='.$row["subcui_id"].'">
+							echo'<a href="addcart.php?subcui_id='.$row["subcui_id"].'">
 								<h3> <span class="simpleCart_total">RS:0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items)<img src="images/bag.png" alt=""></h3>
 							</a>';
 							?>	
+							 
+							
 							<p><a href="javascript:;" class="simpleCart_empty">empty cart</a></p>
 							<div class="clearfix"> </div>
 						</div>

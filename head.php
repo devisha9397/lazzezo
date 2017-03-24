@@ -75,17 +75,7 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 			<div class="collapse navbar-collapse" id="myNavbar">
 		
 		<div class="font-size">
-			      <ul class="nav navbar-nav navbar-right masthead-nav">
 			      
-					<li><a href="#"><span ><div class="btn-group">
-					<button type="button" class="btn btn-success" style="width:150px">ORDER ONLINE</button></div></span></a></li>
-					<li><a href="#"> <span class="glyphicon glyphicon-heart" aria-hidden="true" size="50px"></span></a></li>
-			        <li><a href="addcart.php?subcui_id='.$row['subcui_id'].'"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a></li>
-					
-<li><a href="index1.php"><span class="glyphicon glyphicon-home" aria-hidden="true" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?"></span></a></li>
-					<li><a href="#"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> </a></li>
-			        
-			      </ul>
 			    </div>
 				</div>
 		
@@ -99,7 +89,7 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 						<li><a  href="restaurantview.php">Restaurants</a></li>
 						<li><a  href="discount.php">Discounts</a></li>
 						<li><a  href="events.html"> Manage Profile</a></li>
-						<li><a  href="chgpwd.php">Change Password</a></li>
+						<li><a  href="contact.html">Contact</a></li>
 					</ul>
 				</div>
 			<script>
