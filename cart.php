@@ -16,7 +16,7 @@ echo '</tr>';
 echo '</tr>';
 echo '<div class="col-sm-6 col-md-4">';
 echo '<div class="caption">';
-echo '<td><img style"height:30px;width:50px" src="images/'.$row[""].'"></td>';
+echo '<td><img style"height:30px;width:50px" src="../images/'.$row[""].'"></td>';
 echo '<td><h3>'.$row["o_id"].'</h3></td>';
 echo '<td><h3>'.$row["o_date"].'</h3></td>';
 echo '<td>

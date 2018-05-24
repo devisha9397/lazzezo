@@ -6,6 +6,9 @@ $rest_id=$_REQUEST['rest_id'];
 <html>
 <head>
 <title>individual</title>
+<script src="Scripts/jquery-1.9.1.min.js"></script>
+<link href="Content/bootstrap.css" rel="stylesheet"/>
+<script src="Scripts/bootstrap.min.js"></script>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/jquery.min.js"></script>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
@@ -46,7 +49,7 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 <form action="menuphotos.php?rest_id=<?php echo $rest_id;?>" method="post">	
 
 <?php
-include('headerbefore.php');
+include('header.php');
 ?>
 
 <div class="blog">
@@ -62,7 +65,7 @@ include('headerbefore.php');
 		{
 		echo"<div class='single-top'>";
 		
-			echo"<img class='img-responsive wow fadeInUp animated' data-wow-delay='.5s' style='width:900px; height:400px; ' src=".$row['rest_image']." alt='' />";
+			echo"<img class='img-responsive wow fadeInUp animated' data-wow-delay='.5s' style='width:900px; height:400px; ' src='../images/".$row['rest_image']."'' alt='' />";
 			echo"<div class='lone-line'>";
 					echo"<h4>".$row['rest_name']."</h4>";
 					echo"<nav class='navbar navbar-default navbar-static-top'>
@@ -81,79 +84,61 @@ include('headerbefore.php');
 </nav></div></div>";
 		}
 	?>	
-	
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+
+  
+  <div class="carousel-inner" role="listbox">
+
 <?php
 
-		
+		$img=1;
 		$obj1=new database();
 		$res1=$obj1->getmenuphotos($rest_id);
 		
 		while($row=mysql_fetch_array($res1,MYSQL_ASSOC))
 		{
-echo'<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-
-
-<div class="carousel-inner" role="listbox">
-    <div class="item active">
-      <img src="'.$row["menupic_path"].'" style="width:100%;" alt="...">
-      <div class="carousel-caption">
-      </div>
+			if($img==1)
+{
+ echo '<div class="item active">
+      <img src="../images/'.$row['menupic_path'].'" style="height:600px; width:1000px;" >
+    
     </div>
-   <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  </div></div>';
+    ';
+
+}
+
+else{
+	
+echo ' <div class="item">
+      <img src="../images/'.$row['menupic_path'].'" style="height:600px; width:1000px;"  >
+    </div>';
+	
+	
+}
+$img=$img+1;
+
 
 		}
 
 ?>
+</div>
+
+<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
 
 	</div>	
 </div>
 
 <?php
-
-	
-	$obj2=new database();
-		$res2=$obj2->disrestc();
-		
-		echo"<div class='col-md-3 categories-grid'>
-			<div class='search-in animated wow fadeInUp' data-wow-duration='1000ms' data-wow-delay='500ms'>
-				<h4>Search</h4>
-					<div class='search'>
-					<form>
-						<input type='text' placeholder='Search'  >
-						<input type='submit' value='' >
-					</form>
-					</div>
-			</div>
-			<div class='grid-categories animated wow fadeInLeft' data-wow-duration='1000ms' data-wow-delay='500ms'>
-			<h4>Categories</h4>";
-while($row=mysql_fetch_array($res2,MYSQL_ASSOC))
-	{
-
-		
-					echo"<ul class='popular'>";
-						echo"<li><a href='#'><i class='glyphicon glyphicon-menu-right'> </i>".$row['cusines']."</a></li>";
-						
-						
-					echo"</ul>";
-				
-	}
-	echo"<div class='jumbotron'>";
-
- echo" <h1>What to find famous food around your area??</h1><br>";
-  echo"<p><a class='btn btn-primary btn-lg' href='#' role='button'>Find famous food!</a></p>";
-echo"</div>";
-	echo"</div>
-	
-				</div>
-";
+	include('side.php');
 ?>
 
 

@@ -8,23 +8,37 @@ $_SESSION['rest_id']=$rest_id;
 	include('database.php');
 	if(isset($_POST["btnadd"]))
 	{
-		$subcui_id=$_POST["btnadd"];
-		$subcui_price=$_POST["btnadd"];
-		echo $subcui_id;
-		$quantity=$_POST["quantity"];
-		echo "qu".$quantity;
 		$email=$_SESSION["email"];
 		
+		$subcui_id=$_POST["btnadd"];
+		$quantity=$_POST["txtquantity"];
 	
+		
+		$obj6=new database();
+		$res6=$obj6->getcart($subcui_id);
+		
+		while($row=mysql_fetch_array($res6,MYSQL_ASSOC))
+		{
+	
+		$price=$row["subcui_price"];
+	
+	
+		
+		}		
+
+$total_amount=$price*$quantity;
+	echo $total_amount;
 		
 		//$price=$_POST["subcui_price"];
 	
-	$amt=$subcui_price*$quantity;
 	
-	$date_of_order=date("dd-mm-yyyy");
+	
+	
+	date_default_timezone_set("Asia/Kolkata");
+	$date_of_order=date("d-m-Y h:i:s");
 	$area=NULL;
 	$obj5=new database();
-	$res5=$obj5->addcart($rest_id,$email,$subcui_id,$quantity,$amt,$date_of_order,$area);
+	$res5=$obj5->addcart($rest_id,$email,$subcui_id,$quantity,$total_amount,$date_of_order,$area);
 	if($res5==1)
 	{
 		header('location:order.php?rest_id='.$rest_id);
@@ -72,9 +86,6 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 
 <form method="post" action="order.php?rest_id=<?php echo $rest_id; ?>">
 <!-- header -->
-<div class="head-top">
-			
-		</div>
 	<?php
 	
 	
@@ -85,7 +96,7 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 
 					
 					
-					<div class="blog">
+<div class="blog">
 <div class="container">
 <div class='col-md-9'>
 <div class='single'>
@@ -113,12 +124,7 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 		}
 	?>	
 	<table class="table table-hover" >
-		
-	
-	
-	
-	
-<?php
+		<?php
 
 $obj1=new database();
 	
@@ -130,11 +136,11 @@ $obj1=new database();
 		
 			
 			echo'<tr>
-	<td>		<div class="panel panel-default">
-  <div class="panel-body">
+	<td>		
+<div class="font1">
    '.$row['cui_name'].'
   </div>
-</div></td></tr>
+</td></tr>
 			
 				<tr>
 				<td><h4>'.$row["subcui_name"].'</h4></td>
@@ -148,21 +154,27 @@ $obj1=new database();
 							
 					</div>
 					</td>
-					<td><select name="quantity">
+					<td>Quantity:  <select name="txtquantity">
 <option value="1">1</option>
 <option value="2">2</option>
 <option  value="3">3</option>
 <option  value="4">4</option>
 <option  value="5">5</option>
-<option  value="1">6</option>
-<option  value="1">7</option>
-<option  value="1">8</option>
-<option  value="1">9</option>
-<option  value="1">10</option>
+<option  value="6">6</option>
+<option  value="7">7</option>
+<option  value="8">8</option>
+<option  value="9">9</option>
+<option  value="10">10</option>
 </select>
 </td>
 					<td>
-					<button type="submit" name="btnadd" value="'.$row["subcui_id"].'.'.$row["subcui_price"].'" >add</button>
+					<!-- Single button -->
+<div class="btn-group">
+  <button type="submit" name="btnadd" value="'.$row["subcui_id"].'" class="btn btn-success">ADD
+      </button>
+
+</div>
+					
 					</td>
 				</tr>';
 			
@@ -182,7 +194,7 @@ $obj1=new database();
 
 	
 	$obj2=new database();
-		$res2=$obj2->disrestc();
+		$res2=$obj2->discat1();
 		
 		echo"<div class='col-md-3 categories-grid'>
 			<div class='search-in animated wow fadeInUp' data-wow-duration='1000ms' data-wow-delay='500ms'>
@@ -214,23 +226,12 @@ while($row=mysql_fetch_array($res2,MYSQL_ASSOC))
   echo"<p><a class='btn btn-primary btn-lg' href='#' role='button'>Find famous food!</a></p>";
 echo"</div>";
 	echo"</div>
-	
-				</div>
+	</div>
+	</div>
+				
 ";
 ?>
-<div class="header-right1">
-						<div class="cart box_1">
-							<?php
-							echo'<a href="addcart.php?subcui_id='.$row["subcui_id"].'">
-								<h3> <span class="simpleCart_total">RS:0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items)<img src="images/bag.png" alt=""></h3>
-							</a>';
-							?>	
-							 
-							
-							<p><a href="javascript:;" class="simpleCart_empty">empty cart</a></p>
-							<div class="clearfix"> </div>
-						</div>
-					</div>
+
 
 
 </div>
@@ -242,14 +243,5 @@ echo"</div>";
 ?>
 
 </form>
-
-<!-- about -->
-<!---728x90--->
-
-<!-- about -->	
-<!--
-<!-- footer-->	
 </body>
-
-
 </html>

@@ -29,6 +29,8 @@ include('database.php');
 
 ?>
 <form action="editpwd.php" method="post">
+
+
 <center>
 <table> 
 <caption><h1>change password</h1>

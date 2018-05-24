@@ -68,17 +68,17 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 				<div class="col-md-8 footer-top animated wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="500ms">
 					<ul class=" in">
 						<li><a href="index1.php">Home</a></li>
-						<li><a  href="menu.html">Add Restaurant</a></li>
-						<li><a  href="blog.html">Discounts</a></li>
+						<li><a  href="addrest.php">Add Restaurant</a></li>
+						<li><a  href="discount.php">Discounts</a></li>
 						<li><a  href="events.html">About us</a></li>
-						<li><a  href="contact.html">Contact</a></li>
+						<li><a  href="contact.php">Contact</a></li>
 					</ul>					
-						<span>There are many variations of passages</span>
+						<span>There are many variations of Food</span>
 				</div>
 				<div class="col-md-4 footer-bottom  animated wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
 					<h2>Follow Us</h2>
 					<label><i class="glyphicon glyphicon-menu-up"></i></label>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis.</p>
+					<p></p>
 					<ul class="social-ic">
 						<li><a href="#"><i></i></a></li>
 						<li><a href="www.instagram.com"><i class="ic"></i></a></li>

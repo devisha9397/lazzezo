@@ -1,17 +1,17 @@
+<!DOCTYPE html>
 <?php
 
 SESSION_START();
 
 ?>
 
-
-<!DOCTYPE html>
 <html>
 <head>
 <title></title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 
 <script src="js/jquery.min.js"></script>
+
 <!-- Custom Theme files -->
 <!--theme-style-->
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
@@ -44,6 +44,11 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
   ga('send', 'pageview');
 </script>
 <script async type='text/javascript' src='../../../../../cdn.fancybar.net/ac/fancybar6a2f.js?zoneid=1502&amp;serve=C6ADVKE&amp;placement=w3layouts' id='_fancybar_js'></script>
+<script>
+function myFunction() {
+    document.getElementById("fav").style.color = "red";
+}
+</script>
 
   </div>
   </div>
@@ -61,14 +66,32 @@ include('header.php');
 				
 <?php 
 
+$noi=100;
+$page = 1;
+ if($page=="" || $page=="1")
+{
+	$page1=0;
+}
+else
+{
+	$page1=($page*$noi)-$noi;
+}
+
+$next_page=$page+1;
+$prev_page=$page-1;
+$first_page=1;
+
+
+
+
 	include('database.php');
 	$obj=new database();
-		$res=$obj->disrestc();
+		$res11=$obj->restview($page1,$noi);
 		
 		
 		echo"<div class='menu-top'>
 				<div class='col-md-4 menu-left'>
-					<h3>Restuarants</h3>
+					<h3>Restaurants</h3>
 					<label><i class='glyphicon glyphicon-menu-up'></i></label>
 					
 				</div>
@@ -77,26 +100,28 @@ include('header.php');
 			</div>";
 		echo"<div class='col-md-9 blog-header'>
 		<div class='blog-head' style='height:400px'>";
-	while($row=mysql_fetch_array($res,MYSQL_ASSOC))
+	while($row=mysql_fetch_array($res11,MYSQL_ASSOC))
 	{
 			echo"<div class='col-md-4 blog-top'>";
 				echo"<div class='blog-in'>";
-					echo"<a href='single.html'><img class='img-responsive' style='height:300px;' src=".$row['rest_image']."></a>
-";
+					echo"<a href='individual.php?rest_id=".$row['rest_id']."'><img class='img-responsive' style='height:300px;' src='../images/".$row['rest_image']."'></a>";
 echo"<center>";
 
-echo"<br><button type='button' class='btn btn-success' aria-label='Right Align'><span class='glyphicon glyphicon-heart' aria-hidden='true'></span>
-</button>";
+echo"<br><a href='addfav.php?rest_id=".$row['rest_id']."'><button type='button' id='fav' onclick='myFunction()' class='btn btn-success' aria-label='Right Align'><span class='glyphicon glyphicon-heart' aria-hidden='true'></span>
+</button></a>";
 echo"</center>";
 					echo"<div class='blog-grid'>";
-						echo"<h3><a href='single.html'>".$row['rest_name']."</a></h3>";
-						echo"<h4><a href='single.html'>".$row['area']."</a></h4>";
+						echo"<h3><a href=''>".$row['rest_name']."</a></h3>";
+						echo"<h4><a href=''>".$row['area']."</a></h4>";
 							echo"<div class='clearfix'> </div>";
 						
-						echo"<h4><a href='single.html'>Cusines: ".$row['cusines']."</a></h4>";
-						echo"<h4><a href='single.html'>Hours: ".$row['opening_status']."</a></h4>";
+						echo"<h4><a href=''>Cusines: ".$row['cusines']."</a></h4>";
+						echo"<h4><a href=''>Hours: ".$row['opening_status']."</a></h4>";
 						
-						echo"<a href='order.php?rest_id=".$row['rest_id']."'><button type='button' class='btn btn-danger'>Order now</button></a>";
+					
+						
+						echo"<a href='order1.php?rest_id=".$row['rest_id']."'><button type='button' name='btnorder' class='btn btn-danger'>Order now</button></a>";
+					
 						//echo"</div>";
 						//echo"<span class='date-in'><i class='glyphicon glyphicon-book'> </i>book a table</span>";
 						//echo"<a href='single.html' class='call'><i class='glyphicon glyphicon-comment'></i>24</a>";
@@ -110,95 +135,88 @@ echo"</center>";
 			</div>";
 		
 		
-	}
+	
+  }
+  		$res10=$obj->disrestc();
+  $cnt=mysql_num_rows($res10);	
+		//echo $cnt.'<br>';
+		
+		$a=$cnt/$noi;
+		
+		$a=ceil($a);
+		$last_page=$a;
+  
+
+
 	echo"</div>
 	
 
 </div>";
+
 ?>
+
 <?php
+include('side.php');
+?>
 
 
+</div>
+</div>
+<?php 
 
-  if(isset($_POST['btngo']))
-  {
-	  $search=$_POST["txtsearch"];
-	$search1=strtolower($search);
-	    $obj4=new database();
-            $res4=$obj4->search($search1);
-			$cnt=mysql_num_rows($res4);
-				
-            if($cnt>=1)
-           {
-				
-				while($row=mysql_fetch_array($res4,MYSQL_ASSOC))
-				{
-						Header('Location:restaurantsearch.php?rest_id='.$row['rest_id'].'');
-				}	
+echo '<br><center>';
+			if($page==1)
+			{
+			
+			}
+			else 
+			{	
+			echo '<a href="restaurantview.php?page='.$first_page.'" style="text-decoration:none;"><button class="button"><<</button></a>';	
+			}
+			if($prev_page==0)
+			{
 				
 			}
 			else
-				{
-					header("location:noresult.php");
-				}
-
+			{
+		echo '<a href="restaurantview.php?page='.$prev_page.'" style="text-decoration:none;"><button class="button">Previous</button></a>';	
+			}
 			
-  }
-  
-  
-  ?>  
-
-
-<?php
-
-	
-	$obj1=new database();
-		$res1=$obj1->disrestc();
-	
-		echo"<div class='col-md-3 categories-grid'>
-			<div class='search-in animated wow fadeInUp' data-wow-duration='1000ms' data-wow-delay='500ms'>
-				<h4>Search</h4>
-					<div class='search'>
-					<form>
-						<input type='text'name='txtsearch' placeholder='Search'  >
-						<input type='submit'name='btngo' value='' >
-					</form>
-					</div>
+			for($b=1;$b<=$a;$b++)
+		{
+			echo '<a href="restaurantview.php?page='.$b.'" style="text-decoration:none;"><button class="button">'.$b.'</button></a>'; 
+		}
 		
-			<div class='grid-categories animated wow fadeInLeft' data-wow-duration='1000ms' data-wow-delay='500ms'>
-			<h4>Categories</h4>";
-while($row=mysql_fetch_array($res1,MYSQL_ASSOC))
-	{
-
+		if($next_page==$a)
+		{
+			echo '<a href="restaurantview.php?page='.$next_page.'" style="text-decoration:none;"><button class="button">Next</button></a>';	
+		}
+		else
+		{	
 		
-					echo"<ul class='popular'>";
-						echo"<li><a href='category.php?cusines=".$row['cusines']."'><i class='glyphicon glyphicon-menu-right'> </i>".$row['cusines']."</a></li>";
-						
-						
-					echo"</ul>";
-				
-	}
-	echo"<div class='jumbotron'>";
+		}
+		if($page==$last_page)
+		{
+			
+		}
+		else if($a==0)
+		{
+			
+		}
+		else 
+		{	
+		echo '<a href="discount.php?page='.$last_page.'" style="text-decoration:none;"><button class="button">>></button></a>';
+		}
+		echo '</center>';
+			 ?>
 
- echo" <h1>What to find famous food around your area??</h1><br>";
-  echo"<p><a class='btn btn-primary btn-lg' href='#' role='button'>Find famous food!</a></p>";
-echo"</div>";
-	echo"</div>
-	
-				</div>
-";
-?>
-
-</div>
-</div>
-<!--//content-->
-<!--footer-->
+<br><br>
 	<?php 
 	include ('footer.php');
 
-?>	
-	<!--//footer-->
+?>
 </form>
+
 </body>
 
 

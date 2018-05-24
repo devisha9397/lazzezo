@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE html>
 <html>
-
+<title>Index</title>
 <!-- Mirrored from p.w3layouts.com/demos/21-03-2016/cookery/web/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 27 Feb 2017 08:09:35 GMT -->
 <head>
 <title></title>
@@ -106,8 +106,6 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 			      <ul class="nav navbar-nav navbar-right masthead-nav">
 			        <li><a href="login.php"><span ><div class="btn-group">
 					<button type="button" class="btn btn-primary" style="width:100px">Login</button></div></span></a></li>
-					<li><a href="#"><span ><div class="btn-group">
-					<button type="button" class="btn btn-success" style="width:150px">ORDER ONLINE</button></div></span></a></li>
 					
 			      </ul>
 			    </div>
@@ -118,10 +116,10 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 				<div class="toggle">
 					<ul class="toggle-menu">
 						<li><a class="active" href="index-2.html">Home</a></li>
-						<li><a  href="menu.html">Menu</a></li>
+						
 						<li><a  href="restaurantview.php">Restaurants</a></li>
 						<li><a  href="discount.php">Discounts</a></li>
-						<li><a  href="typo.html">Manage Profile</a></li>
+						
 						<li><a  href="contact.html">Contact</a></li>
 					</ul>
 				</div>
@@ -204,7 +202,7 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 				{
 						echo"<div class='col-md-10 blog-top'>";
 				echo"<div class='blog-in'>";
-					echo"<a href='single.html'><img class='img-responsive' style='height:300px; width:100%;' src=".$row['rest_image']."></a>
+					echo"<a href='single.html'><img class='img-responsive' style='height:300px; width:100%;' src='../images/".$row['rest_image']."'></a>
 ";
 echo"<center>";
 
@@ -217,7 +215,7 @@ echo"</center>";
 							echo"<div class='clearfix'> </div>";
 						
 						
-						echo"<h4><a href='single.html'>Hours: ".$row['opening_status']."</a></h4>";
+ 						echo"<h4><a href='single.html'>Hours: ".$row['opening_status']."</a></h4>";
 						
 						echo"<a href='order.php?rest_id=".$row['rest_id']."'><button type='button' class='btn btn-danger'>Order now</button></a>";
 						//echo"</div>";

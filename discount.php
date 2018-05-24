@@ -1,6 +1,6 @@
 <?php
 	SESSION_START();
-	
+	$page = isset($_GET['page']) ? $_GET['page'] : 1;
 	?>
 
 
@@ -70,18 +70,34 @@ include('header.php');
 			</div>
 			<div class="events-bottom">
 				<?php
+				
+				$noi=3;
+
+ if($page=="" || $page=="1")
+{
+	$page1=0;
+}
+else
+{
+	$page1=($page*$noi)-$noi;
+}
+
+$next_page=$page+1;
+$prev_page=$page-1;
+$first_page=1;
+
 				$data=1;
 				include('database.php');
 	$obj=new database();
 	
-		$res=$obj->getdiscount();
+		$res=$obj->discount($page1,$noi);
 		
 		while($row=mysql_fetch_array($res,MYSQL_ASSOC))
 		{
 			if($data%2!=0)
 			{
 				echo'<div class="col-md-5 events-bottom1 animated wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="500ms">
-					<a href="single.html"><img src="'.$row["rest_image"].'" alt="" style="height:285px; width:1000px;" class="img-responsive"></a>
+					<a href="single.html"><img src="../images/'.$row["rest_image"].'" alt="" style="height:285px; width:1000px;" class="img-responsive"></a>
 				</div>
 				<div class="col-md-7 events-bottom2 animated wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="500ms">
 					<h3>'.$row["rest_name"].'</h3>
@@ -91,7 +107,7 @@ include('header.php');
 					<div class="read-more">						
 						<a class="link link-yaku" href="individual.php?rest_id='.$row["rest_id"].'">
 							<span>R</span><span>e</span><span>a</span><span>d</span> <span>M</span><span>o</span><span>r</span><span>e</span>					
-						</a>
+							</a>
 					</div>
 				</div>
 				<div class="clearfix"> </div>
@@ -115,14 +131,24 @@ include('header.php');
 					</div>
 				</div>
 				<div class="col-md-5 events-bottom1 animated wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="500ms">
-					<a href="single.html"><img src="'.$row["rest_image"].'" style="height:285px; width:1000px;" alt="" class="img-responsive"></a>
+					<a href="single.html"><img src="../images/'.$row["rest_image"].'" style="height:285px; width:1000px;" alt="" class="img-responsive"></a>
 				</div>
-				<div class="clearfix"> </div>';
+				<div class="clearfix"> </div>
+				<br><br>';
 				
 			}
 			$data=$data+1;
 				
 		}
+		$res10=$obj->getdiscount();
+  $cnt=mysql_num_rows($res10);	
+		//echo $cnt.'<br>';
+		
+		$a=$cnt/$noi;
+		
+		$a=ceil($a);
+		$last_page=$a;
+  
 				?>
 			</div>
 			<!---728x90--->
@@ -130,7 +156,53 @@ include('header.php');
 		</div>
 	</div>
 </div>
+<?php 
 
+echo '<br><center>';
+			if($page==1)
+			{
+				
+			}
+			else 
+			{	
+			echo '<a href="discount.php?page='.$first_page.'" style="text-decoration:none;"><button class="button"><<</button></a>';	
+			}
+			if($prev_page==0)
+			{
+				
+			}
+			else
+			{
+		echo '<a href="discount.php?page='.$prev_page.'" style="text-decoration:none;"><button class="button">Previous</button></a>';	
+			}
+			
+			for($b=1;$b<=$a;$b++)
+		{
+			echo '<a href="discount.php?page='.$b.'" style="text-decoration:none;"><button class="button">'.$b.'</button></a>'; 
+		}
+		
+		if($next_page==$a)
+		{
+			echo '<a href="discount.php?page='.$next_page.'" style="text-decoration:none;"><button class="button">Next</button></a>';	
+		}
+		else
+		{	
+		
+		}
+		if($page==$last_page)
+		{
+			
+		}
+		else if($a==0)
+		{
+			
+		}
+		else 
+		{	
+		echo '<a href="discount.php?page='.$last_page.'" style="text-decoration:none;"><button class="button">>></button></a>';
+		}
+		echo '</center>';
+			 ?>
 <!--footer-->
 	<?php
 

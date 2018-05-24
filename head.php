@@ -84,12 +84,12 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 				<div class="toggle">
 					<ul class="toggle-menu">
 					
-						<li><a class="active" href="index-2.html">Home</a></li>
-						<li><a  href="menu.html">Menu</a></li>
+						<li><a class="active" href="index1.php">Home</a></li>
+						
 						<li><a  href="restaurantview.php">Restaurants</a></li>
 						<li><a  href="discount.php">Discounts</a></li>
-						<li><a  href="events.html"> Manage Profile</a></li>
-						<li><a  href="contact.html">Contact</a></li>
+					
+						<li><a  href="contact.php">Contact</a></li>
 					</ul>
 				</div>
 			<script>

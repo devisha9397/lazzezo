@@ -6,8 +6,8 @@ include('database.php');
 
 $oldpwd=$_SESSION["oldpwd"];
 
-	$odpwd=$_POST["txtold"];
-	if($oldpwd==$odpwd)
+	$oldpwd=$_POST["txtold"];
+	if($oldpwd==$oldpwd)
 	{
 		$pwd=$_POST["txtnew"];
 		$repwd=$_POST["txtcon"];
@@ -21,7 +21,7 @@ $oldpwd=$_SESSION["oldpwd"];
 			
 			
 			
-			if($res==1)
+			if($res1==1)
 			{
 				
 				Header('Location:viewprofile.php');

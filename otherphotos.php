@@ -49,7 +49,7 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 <form action="otherphotos.php?rest_id=<?php echo $rest_id;?>" method="post">	
 
 <?php
-include('headerbefore.php');
+include('header.php');
 ?>
 
 <div class="blog">
@@ -65,7 +65,7 @@ include('headerbefore.php');
 		{
 		echo"<div class='single-top'>";
 		
-			echo"<img class='img-responsive wow fadeInUp animated' data-wow-delay='.5s' style='width:900px; height:400px; ' src=".$row['rest_image']." alt='' />";
+			echo"<img class='img-responsive wow fadeInUp animated' data-wow-delay='.5s' style='width:900px; height:400px; ' src='../images/".$row['rest_image']."' alt='' />";
 			echo"<div class='lone-line'>";
 					echo"<h4>".$row['rest_name']."</h4>";
 					echo"<nav class='navbar navbar-default navbar-static-top'>
@@ -89,11 +89,6 @@ include('headerbefore.php');
 	
 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-  </ol>
   
   <div class="carousel-inner" role="listbox">
 <?php
@@ -107,7 +102,7 @@ include('headerbefore.php');
 if($img==1)
 {
  echo '<div class="item active">
-      <img src="'.$row['otherpic_path'].'" alt="...">
+      <img src="../images/'.$row['otherpic_path'].'" style="height:500px; width:1000px;" >
     
     </div>
     ';
@@ -117,16 +112,17 @@ if($img==1)
 else{
 	
 echo ' <div class="item">
-      <img src="'.$row['otherpic_path'].'" alt="...">
+      <img src="../images/'.$row['otherpic_path'].'" style="height:500px; width:1000px;"  >
     </div>';
 	
 	
 }
-$img=$img+1;
-		}
-		?>
-		 </div>
 
+  $img=$img+1;
+		}
+		if($img>1)
+		{
+		echo '</div>
 <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
@@ -134,7 +130,11 @@ $img=$img+1;
   <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
-  </a>
+  </a>';
+}
+		?>
+		 
+
 </div>
 	</div>	
 </div>
@@ -142,40 +142,7 @@ $img=$img+1;
 <?php
 
 	
-	$obj2=new database();
-		$res2=$obj2->disrestc();
-		
-		echo"<div class='col-md-3 categories-grid'>
-			<div class='search-in animated wow fadeInUp' data-wow-duration='1000ms' data-wow-delay='500ms'>
-				<h4>Search</h4>
-					<div class='search'>
-					<form>
-						<input type='text' placeholder='Search'  >
-						<input type='submit' value='' >
-					</form>
-					</div>
-			</div>
-			<div class='grid-categories animated wow fadeInLeft' data-wow-duration='1000ms' data-wow-delay='500ms'>
-			<h4>Categories</h4>";
-while($row=mysql_fetch_array($res2,MYSQL_ASSOC))
-	{
-
-		
-					echo"<ul class='popular'>";
-						echo"<li><a href='category.php?cusines=".$row['cusines']."'><i class='glyphicon glyphicon-menu-right'> </i>".$row['cusines']."</a></li>";
-						
-						
-					echo"</ul>";
-				
-	}
-	echo"<div class='jumbotron'>";
-
- echo" <h1>What to find famous food around your area??</h1><br>";
-  echo"<p><a class='btn btn-primary btn-lg' href='#' role='button'>Find famous food!</a></p>";
-echo"</div>";
-	echo"</div>
-	
-				</div>";
+	include('side.php');
 ?>
 
 

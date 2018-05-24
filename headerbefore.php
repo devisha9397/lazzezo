@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Cookery A Food Category Flat Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<title>header</title>
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery.min.js"></script>
@@ -68,11 +68,10 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 		
 		<div class="font-size">
 			      <ul class="nav navbar-nav navbar-right masthead-nav">
-			      <li><a href="#"><span ><div class="btn-group">
+			      <li><a href="login.php"><span ><div class="btn-group">
 					<button type="button" class="btn btn-primary" style="width:100px">LOGIN</button></div></span></a></li>
 					
-					<li><a href="#"><span ><div class="btn-group">
-					<button type="button" class="btn btn-success" style="width:150px">ORDER ONLINE</button></div></span></a></li>
+					
 					
 			      </ul>
 			    </div>
@@ -82,12 +81,11 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 			<a href="#" class="navicon"></a>
 				<div class="toggle">
 					<ul class="toggle-menu">
-						<li><a class="active" href="index-2.html">Home</a></li>
-						<li><a  href="menu.html">Menu</a></li>
+						
+						<li><a class="active" href="index1.php">Home</a></li>
 						<li><a  href="restaurantview.php">Restaurants</a></li>
 						<li><a  href="discount.php">Discounts</a></li>
-						<li><a  href="events.html">Manage Profile</a></li>
-						<li><a  href="contact.html">Contact</a></li>
+						<li><a  href="contact.php">Contact</a></li>
 					</ul>
 				</div>
 			<script>
@@ -109,4 +107,4 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 		
 </div>
 </body>
-</html>
+</html>`

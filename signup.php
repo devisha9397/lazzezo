@@ -1,4 +1,4 @@
-<?php 
+<?php
 SESSION_START();
 ?>
 <!DOCTYPE html>
@@ -10,14 +10,73 @@ SESSION_START();
 <script src="js/jquery.min.js"></script>
 <script src="js/signup.js"></script>
 <link href="css/signup.css" rel="stylesheet" type="text/css" media="all" />	
+<script>
+function adduser()
+{
+	return confirm('You have successfully signed in  ') ;
+}
+</script>
 <link href='http://fonts.googleapis.com/css1?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
-</head>
 
+
+<script type="text/javascript">
+	
+	function allLetter(uname)
+{
+	var letters=/^[A-Za-z ]+$/;
+	if(uname.value.match(letters))
+	{
+			return true;
+	}
+	else
+	{
+			
+			uname.value="";
+			uname.focus();
+			alert('User Name must have Alphabetic characters only');
+			return false;
+	}
+}
+
+</script>
+
+<script type="text/javascript">
+function passid_validation(passid,mx,my)
+{
+	var pl=passid.value.length;
+	if(pl==0 || pl>=my || pl<mx)
+	{
+		alert("password should not be empty/length must be between "+mx+" to "+my);
+		passid.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+
+
+<script type="text/javascript">
+function numid_validation(passid,mx,my)
+{
+	var pl=passid.value.length;
+	if(pl==0 || pl>=my || pl<mx)
+	{
+		alert("Please enter correct number.");
+		passid.focus();
+		return false;
+	}
+	return true;
+}
+</script></head>
 <?php 
 include 'database.php';
 	if(isset($_POST["btnsubmit"]))
 	{
+		
+		
 		$user_name=$_POST["txtuname"];
+		//echo $user_name;
+		
 		$user_email=$_POST["txtemail"];
 		$password=$_POST["txtpass"];
 		$conf=$_POST["txtconpass"];
@@ -29,7 +88,20 @@ include 'database.php';
 		$yyyy=$_POST["yyyy"];
 		$date=$dd."-".$mm."-".$yyyy;
 		//$dd."-".$mm."-".$yyyy;
-		$pro_pic=$_POST["txtfile"];
+		$target_dir = "images/";
+$target_file = $target_dir . basename($_FILES["txtimage"]["name"]);
+$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+		//$pro_pic1="images/".$_FILES["txtimage"]["name"];
+			//$rest_image1=$_FILES["txtrestimage"]["name"];
+			//move_uploaded_file($_FILES["txtimage"]["tmp_name"],$pro_pic1);
+		
+		move_uploaded_file($_FILES["txtimage"]["tmp_name"], $target_file);
+			
+	
+	
+	
+	
+
 		$type=2;
 		$gender=$_POST["txtgender"];
 		if($_POST["captcha_code"]==$_SESSION["captcha_code"])
@@ -39,34 +111,43 @@ include 'database.php';
 		{
 				
 		$obj=new database();
-		$res=$obj->signup($user_email,$user_name,$password,$address,$mobile_no,$gender,$city,$pro_pic,$date,$type);
-		echo $res;
+		$res=$obj->signup($user_email,$user_name,$password,$address,$mobile_no,$gender,$city,$target_file,$date,$type);
+	//	echo $res;
 			if($res==1)
 			{
-				Header('Location:index1.php');
+				Header('Location:restaurantview.php');
+				echo "done";
 			}
 
 		
 			else
 			{
-				echo"SOMETHING WENT WRONG";
+				$msg="SOMETHING WENT WRONG";
+       	 echo "<script type='text/javascript'> alert('$msg'); </script>";
+
+				
 			}
 		}
 	
 		else
 		{
-			echo"your password does'nt match confirm password";
+			$msg="your password does not match confirm password";
+       	 echo "<script type='text/javascript'> alert('$msg'); </script>";
+			
 		}
 }
 		else
 		{
-			echo"code doesn't match";
+			$msg="code does not match.";
+       	 echo "<script type='text/javascript'> alert('$msg'); </script>";
+
+			
 		}
 }
 ?>
 
 <body>
-<form method="post" action="signup.php">
+
 <?php
 include('head.php');
 ?><!--
@@ -76,19 +157,24 @@ include('head.php');
     <div class="container">
         <div class="card card-container">
             <!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
-			
+			 <form class="form-signin" method="post" action="signup.php" enctype="multipart/form-data" name="form1">
             <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
             <p id="profile-name" class="profile-name-card"></p>
-			<input type="file"  id="inputfile" name="txtfile"/><br>
-            <form class="form-signin">
+			<input type="file" name="txtimage" /><br>
+           
 			
                 <span id="reauth-email" class="reauth-email"></span>
-				<input type="text" id="inputname" class="form-control" name="txtuname" placeholder="Enter name" required autofocus><br>
+				<input type="text" id="inputname" class="form-control" name="txtuname" onblur="return allLetter(txtuname);"  placeholder="Enter name" required><br>
                 <input type="email" id="inputEmail" class="form-control" name="txtemail" placeholder="Email address" required><br>
-               <input type="password" id="inputPassword" name="txtpass" class="form-control" placeholder="Password" required><br>
+
+                   <input type="password" id="inputname" class="form-control" name="txtpass" placeholder="Enter Password" onblur="return passid_validation(document.form1.txtpass,8,16);"><br>
+
+             <input type="password" id="inputname" class="form-control" name="txtconpass" placeholder="Confirm password" onblur="return passid_validation(document.form1.txtconpass,8,16);"><br>
+
 			   
-				<input type="password" id="inputconPassword" name="txtconpass" class="form-control" placeholder="Confirm password" required><br>
-				<input type="number" id="inputmobile" name="txtmob" class="form-control" placeholder="Mobile number" required><br>
+				<input type="number" id="inputname" class="form-control" name="txtmob" placeholder="Mobile number" onblur="return numid_validation(document.form1.txtmob,8,12);"><br>
+
+				<!--<input type="number" id="inputmobile" maxlength="12" name="txtmob" class="form-control" placeholder="Mobile number" required><br>-->
 			<br>
 			
 			<div class="form-group">
@@ -99,9 +185,24 @@ include('head.php');
 			<div class="form-group">
 			<label class="control-label col-sm-3">City </label>
 			<select name="city" class="form-control">
-<option value="abad">abad</option>
-<option checked value="baroda">baroda</option>
-<option value="surat">surat</option>
+<option value="Ahmedabad">Ahmedabad</option>
+<option checked value="Surat">Surat</option>
+<option value="Baroda">Baroda</option>
+<option value="Rajkot">Rajkot </option>
+<option value="Bhavnagar">Bhavnagar </option>
+<option value="Anand">Anand</option>
+<option value="Morbi">Morbi</option>
+<option value="Gandhinagar">Gandhinagar</option>
+<option value="Bharuch">Bharuch</option>
+<option value="Bhuj">Bhuj</option>
+<option value="Patan">Patan</option>
+<option value="Gandhidham">Gandhidham</option>
+<option value="Jamnagar">Jamnagar</option>
+<option value="Mehsana">Mehsana</option>
+<option value="Valsad">Valsad</option>
+<option value="Dakor">Dakor</option>
+<option value="Himatnagar">Himatnagar</option>
+<option value="Khambhat">Khambhat</option>
 </select>
 </div>
 			<div class="form-group">
@@ -132,10 +233,10 @@ include('head.php');
 			<label class="control-label col-sm-3">Gender</label>
           <div class="col-md-8 col-sm-9">
             <label>
-            <input name="txtgender" type="radio" value="Male" checked>
+            <input name="txtgender" type="radio" value="male" checked>
             Male </label>
-            <label>x
-            <input name="txtgender" type="radio" value="Female" >
+            <label>
+            <input name="txtgender" type="radio" value="female" >
             Female </label>
           </div>
 		  <br>
@@ -148,16 +249,16 @@ include('head.php');
 		<br>
 
 		</div>
-                <button class="btn btn-lg btn-danger btn-block btn-signin" type="submit" name="btnsubmit">Sign in</button>
-            </form><!-- /form -->
+                <button class="btn btn-lg btn-danger btn-block btn-signin"  type="submit" name="btnsubmit">Sign Up</button>
+            
             
         </div><!-- /card-container -->
     </div>
-	
+	</form><!-- /form -->
 	<?php
 		include('footer.php');
 	?>
 	<!-- /container -->
-	</form>
+	
 	</body>
 	</html>

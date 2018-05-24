@@ -1,0 +1,7 @@
+private static $host='localhost';
+	private static $uname='lazeezo';
+	private static $pwd='Sky@9898';
+	private static $con=NULL;
+
+
+

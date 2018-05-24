@@ -30,7 +30,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
        <?php
 
        	//$pro_id=$_REQUEST["pro_id"];
-          $con=mysql_connect('localhost','root','');
+          $con=mysql_connect('lazeezo.db.9462939.hostedresource.com','lazeezo','Sky@9898');
           mysql_select_db('lazeezo',$con);
           
           $res=mysql_query("select * from restaurant_tbl where rest_id='$rest_id' ",$con);
@@ -64,9 +64,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
           // opening the infowindow in the current map and at the current marker location
           infowindow.open(map, marker);
         });
-    }
+    }	
     google.maps.event.addDomListener(window, 'load', initialize);
     </script>
+
+<script>
+		var blink_speed = 500; var t = setInterval(function () { var ele = document.getElementById('blinker'); ele.style.visibility = (ele.style.visibility == 'hidden' ? '' : 'hidden'); }, blink_speed);
+		</script>
+    
 </head>
 <script src='../../../../../ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'></script><script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -91,7 +96,7 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 <form action="individual.php?rest_id=<?php echo $rest_id;?>" method="post">	
 
 <?php
-include('headerbefore.php');
+include('header.php');
 ?>
 <div class="blog">
 <div class="container">
@@ -107,7 +112,7 @@ include('headerbefore.php');
 		{
 		echo"<div class='single-top'>";
 		
-			echo"<img class='img-responsive wow fadeInUp animated' data-wow-delay='.5s' style='width:900px; height:400px; ' src=".$row['rest_image']." alt='' />";
+			echo"<img class='img-responsive wow fadeInUp animated' data-wow-delay='.5s' style='width:900px; height:400px; ' src='../images/".$row['rest_image']."' alt='' />";
 			echo"<div class='lone-line'>";
 					echo"<h4>".$row['rest_name']."</h4>";
 					echo"<nav class='navbar navbar-default navbar-static-top'>
@@ -129,19 +134,21 @@ include('headerbefore.php');
 							<li><i ><button type='button' class='btn btn-default '>
   <span class='glyphicon glyphicon-phone-alt' aria-hidden='true'>  call</span>
 </button>
- </i></li>
-							<li><a href='#'><i><button type='button' class='btn btn-default '>
+ </i></li>&nbsp;&nbsp;
+&nbsp;&nbsp<li><a href='booktable.php?rest_id=".$row['rest_id']."'><i><button type='button' class='btn btn-default '>
   <span class='glyphicon glyphicon-book' aria-hidden='true'>  bookatable</span>
-</button>  </i></a></li>
+</button>  </a></li>
+<li><a href='order1.php?rest_id=".$row['rest_id']."'><div class='btn-group'>
+					<button type='button' class='btn btn-success' style='width:150px'>ORDER ONLINE</button></div></a></li>
 							
 						</ul>";
-						echo"<h3><span class='glyphicon glyphicon-map-marker' aria-hidden='true'>Address:</span> ".$row['rest_add']."</h3>";
+						echo"<b><h3><span class='glyphicon glyphicon-map-marker' aria-hidden='true'>Address:</span> ".$row['rest_add']."</h3></b>";
 						echo"<div id='map' style='width: 700px; height: 250px;'></div>";
 
-						echo"<h3>Cusines:".$row['cusines']."</h3>";
-						echo"<h3>Cost for 2:".$row['cost']."</h3>";
-						echo"<h3>Hours:".$row['opening_status']."</h3>";
-						echo"<h3>Spotlight:".$row['highlights']."</h3>";
+						echo"<h3><b>Cusines:".$row['cusines']."</h3></b>";
+						echo"<h3><b>Cost for 2:".$row['cost']."</h3></b>";
+						echo"<h3><b>Hours:".$row['opening_status']."</h3></b>";
+						echo"<h3><b>Spotlight:".$row['highlights']."</h3></b>";
 				echo"</div>
 		</div>
 		
@@ -156,19 +163,13 @@ include('headerbefore.php');
 		while($row=mysql_fetch_array($res4,MYSQL_ASSOC))
 		{
 		
-		echo'<div class="alert alert-info" role="alert"><h4>!!  '.$row['discount_desc'].'</h4></div>';
+		echo'<div class="alert alert-info" role="alert"><h4><b><span id="blinker">!!  '.$row['discount_desc'].'</span></b></h4></div>';
 		}
 		
 		?>
-		<?php
-		$cnt=0;
-		if(isset($_POST['like']))
-		{
-				$cnt++;
-			
-		}
 		
-		?>
+		
+		
 		
 		<?php
 		
@@ -176,22 +177,21 @@ include('headerbefore.php');
 		
 		$obj2=new database();
 		$res2=$obj2->disrev($rest_id);
-		$email=$_SESSION["email"];
+		//$email=$_SESSION["email"];
 		while($row=mysql_fetch_array($res2,MYSQL_ASSOC))
 		{
 			
 		echo"<div class='comment'>";
-							echo"<h3>Comments</h3>";
+							echo"<h3>Reviews</h3>";
 							echo" <div class='media wow fadeInLeft animated' data-wow-delay='.5s'>";
 								echo"<div class='code-in'>";
 									echo"<p class='smith'><a href='#'>".$row['user_name']."</a> <span>".$row['review_date']. "</span></p>";
-									echo"<p class='reply'><a href='#'><i class='glyphicon glyphicon-thumbs-up' name='like'> </i>Like</a></p>";
-									echo $cnt;
+									
 									echo"<div class='clearfix'> </div>";
 									echo"</div>";
 							    echo"<div class='media-left'>
 							        <a href='#'>
-							        	<img src='".$row['pro_pic']."' style='width:150px; height:150px;' alt=''>
+							        	<img src='../images/".$row['pro_pic']."' style='width:150px; height:150px;' alt=''>
 							        </a>
 							     </div>";
 							    echo"<div class='media-body'>
@@ -217,7 +217,7 @@ include('headerbefore.php');
 		$message=$_POST['area1'];
 		
 		
-		$date=date('d/m/y');
+		$date=date('d-m-Y');
 		
 		if($email==NULL)
 		{
@@ -246,7 +246,14 @@ include('headerbefore.php');
 ?>	
 
 
-  
+  <?php
+  if($rest_id==NULL)
+{
+	echo "page not found";
+}
+else
+{
+  echo '
 	<div class="single-grid wow fadeInLeft animated" data-wow-delay=".5s">
 	<h2 style="color:blue;">
     Enter your review
@@ -258,19 +265,19 @@ include('headerbefore.php');
   <h4>
  
   		<input type="submit" name="btnadd" value="Add Your Opinion" class="btn btn-info text-center">
-	</div>
+	</div>';
+}
+	?>
 	
 
 
 
 
 
-			<!---728x90--->
+		
 		
 		
 </div>
-<!---->
-<!--//content-->
 
 		</div>
 	
@@ -309,47 +316,16 @@ include('headerbefore.php');
 				<?php
 
 	
-	$obj1=new database();
-		$res1=$obj1->disrestc();
-		
-		echo"
-		<div class='col-md-3 categories-grid'>
-			<div class='search-in animated wow fadeInUp' data-wow-duration='1000ms' data-wow-delay='500ms'>
-				<h4>Search</h4>
-					<div class='search'>
-					<form>
-						<input type='text'name='txtsearch' placeholder='Search'  >
-						<input type='submit'name='btngo' value='' >
-					</form>
-					</div>
-			<div class='grid-categories animated wow fadeInLeft' data-wow-duration='1000ms' data-wow-delay='500ms'>
-			<h4>Categories</h4>";
-while($row=mysql_fetch_array($res1,MYSQL_ASSOC))
-	{
-
-		
-					echo"<ul class='popular'>";
-						echo"<li><a href='category.php?cusines=".$row['cusines']."'><i class='glyphicon glyphicon-menu-right'> </i>".$row['cusines']."</a></li>";
-						
-						
-					echo"</ul>";
-				
-	}
-	echo"<div class='jumbotron'>";
-
- echo" <h1>What to find famous food around your area??</h1><br>";
-  echo"<p><a class='btn btn-primary btn-lg' href='#' role='button'>Find famous food!</a></p>";
-echo"</div>";
-	echo"</div>
-	
-				</div>
-";
+	include('side.php');
 ?>
 
 
 
 	</div>
 </div>
+
+
+
 <?php 
 	include ('footer.php');
 

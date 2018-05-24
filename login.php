@@ -12,15 +12,15 @@ SESSION_START();
 <link href="css/login.css" rel="stylesheet" type="text/css" media="all" />	
 <link href='http://fonts.googleapis.com/css1?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
 </head>
-   <?php 
+  <?php 
 if(isset($_POST["btnlogin"]))
 {
     $email=$_POST["txteid"];
     $pwd=$_POST["txtpwd"];
       include 'database.php';
-	  $obj=new database();
-	  $res=$obj->login($email,$pwd);
-	  $cnt=mysql_num_rows($res);
+    $obj=new database();
+    $res=$obj->login($email,$pwd);
+    $cnt=mysql_num_rows($res);
         if($cnt==1)
       {
         while($row=mysql_fetch_array($res,MYSQL_ASSOC))
@@ -30,8 +30,8 @@ if(isset($_POST["btnlogin"]))
         if($type==2)
         {
           $_SESSION["email"]=$email;
-	//echo "email is".$email;
-       Header('Location:index1.php');
+  //echo "email is".$email;
+       Header('Location:restaurantview.php');
         }
         else if($type==0)
         {
@@ -41,20 +41,22 @@ if(isset($_POST["btnlogin"]))
         {
         echo  "something went wrong";
         }
-		else
-		{
-			echo "You are restaurant owner";
-			
-		}
-		
+    else
+    {
+      echo "You are restaurant owner";
+      
+    }
+    
       }
       else
       {
-        echo"wrong";
+      
+        $msg="Email does not match if you haven not Sign Up yet than please Sign Up.";
+        echo "<script type='text/javascript'> alert('$msg'); </script>";
+
       }
 
   }
-?>
 <body>
 
 
@@ -75,13 +77,14 @@ include('head.php');
             <form class="form-signin">
                 <span id="reauth-email" class="reauth-email"></span>
                 <input type="email" id="inputEmail" class="form-control" name="txteid" placeholder="Email address" required autofocus>
+				<br>
                 <input type="password" id="inputPassword" name="txtpwd" class="form-control" placeholder="Password" required>
                 <div id="remember" class="checkbox">
                     <label>
                         <input type="checkbox" value="remember-me"> Remember me
                     </label>
                 </div>
-                <button class="btn btn-lg btn-danger btn-block btn-signin"  name="btnlogin" type="submit">GO!!</button>
+                <input class="btn btn-lg btn-danger btn-block btn-signin"  name="btnlogin" type="submit">GO!!
             </form><!-- /form -->
             <a href="#" class="forgot-password">
                 Forgot the password?

@@ -1,6 +1,8 @@
 <?php
 SESSION_START();
 $rest_id=$_REQUEST['rest_id'];
+$email=$_SESSION["email"];
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,10 +45,10 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 
 </head>
 <body>
-<form action="otherphotos.php?rest_id=<?php echo $rest_id;?>" method="post">	
+<form action="review.php?rest_id=<?php echo $rest_id;?>" method="post">	
 
 <?php
-include('headerbefore.php');
+include('header.php');
 ?>
 
 <div class="blog">
@@ -62,7 +64,7 @@ include('headerbefore.php');
 		{
 		echo"<div class='single-top'>";
 		
-			echo"<img class='img-responsive wow fadeInUp animated' data-wow-delay='.5s' style='width:900px; height:400px; ' src=".$row['rest_image']." alt='' />";
+			echo"<img class='img-responsive wow fadeInUp animated' data-wow-delay='.5s' style='width:900px; height:400px; ' src='../images/".$row['rest_image']."' alt='' />";
 			echo"<div class='lone-line'>";
 					echo"<h4>".$row['rest_name']."</h4>";
 					echo"<nav class='navbar navbar-default navbar-static-top'>
@@ -95,7 +97,7 @@ include('headerbefore.php');
 							echo" <div class='media wow fadeInLeft animated' data-wow-delay='.5s'>";
 								echo"<div class='code-in'>";
 									echo"<p class='smith'><a href='#'>".$row['user_name']."</a> <span>".$row['review_date']. "</span></p>";
-									echo"<p class='reply'><a href='#'><i class='glyphicon glyphicon-thumbs-up'> </i>Like</a></p>";
+									
 									echo"<div class='clearfix'> </div>";
 									echo"</div>";
 							    echo"<div class='media-left'>
@@ -122,7 +124,7 @@ include('headerbefore.php');
 		
 		$message=$_POST['area1'];
 		
-		$date=date('d/m/y');
+		$date=date('d-m-Y');
 		
 		if($email==NULL)
 		{
@@ -137,7 +139,7 @@ include('headerbefore.php');
 		
 		if($res3==1)
 		{
-			header('Location:individual.php');
+			header('Location:individual.php?rest_id='.$rest_id.'');
 			
 		}
 		else
@@ -170,41 +172,7 @@ include('headerbefore.php');
 
 <?php
 
-	
-	$obj2=new database();
-		$res2=$obj2->disrestc();
-		
-		echo"<div class='col-md-3 categories-grid'>
-			<div class='search-in animated wow fadeInUp' data-wow-duration='1000ms' data-wow-delay='500ms'>
-				<h4>Search</h4>
-					<div class='search'>
-					<form>
-						<input type='text' placeholder='Search'  >
-						<input type='submit' value='' >
-					</form>
-					</div>
-			</div>
-			<div class='grid-categories animated wow fadeInLeft' data-wow-duration='1000ms' data-wow-delay='500ms'>
-			<h4>Categories</h4>";
-while($row=mysql_fetch_array($res2,MYSQL_ASSOC))
-	{
-
-		
-					echo"<ul class='popular'>";
-						echo"<li><a href='#'><i class='glyphicon glyphicon-menu-right'> </i>".$row['cusines']."</a></li>";
-						
-						
-					echo"</ul>";
-				
-	}
-	echo"<div class='jumbotron'>";
-
- echo" <h1>What to find famous food around your area??</h1><br>";
-  echo"<p><a class='btn btn-primary btn-lg' href='#' role='button'>Find famous food!</a></p>";
-echo"</div>";
-	echo"</div>
-	
-				</div>";
+	include('side.php');
 ?>
 
 
